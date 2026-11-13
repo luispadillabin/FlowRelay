@@ -103,6 +103,23 @@ boundaries, dead-letter history, restart persistence, concurrent submissions and
 processing, HTTP flow, origin restrictions, malformed JSON, size/content checks,
 and asset routes. GitHub Actions runs them on Python 3.10 and 3.12.
 
+### Local verification — November 12, 2026
+
+All 12 tests passed on Windows in 3.238 seconds.
+SQLite connections now close after each operation, and the previous
+`WinError 32` did not recur during this test run.
+
+### Browser verification — November 13, 2026
+
+Manually verified:
+- Successful processing on the first attempt.
+- Duplicate acknowledgement (200) without creating another event.
+- Conflict rejection (409) for changed data using the same event ID.
+- Retry recovery on the second attempt.
+- Dead-letter status after three failed attempts.
+- Attempt history showing each processing outcome.
+- Stored events remaining available after a server restart.
+
 ## Limits and next steps
 
 The server binds only to 127.0.0.1. It has no user accounts, authentication,

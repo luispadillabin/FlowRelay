@@ -3,6 +3,7 @@ import json
 import re
 import sqlite3
 from datetime import datetime, timezone
+from contextlib import contextmanager
 
 
 class ValidationError(ValueError):
@@ -47,11 +48,16 @@ class Queue:
                 attempt INTEGER NOT NULL, at REAL NOT NULL, outcome TEXT NOT NULL, detail TEXT NOT NULL);
             ''')
 
+    @contextmanager
     def connect(self):
         db = sqlite3.connect(self.path, timeout=10)
-        db.row_factory = sqlite3.Row
-        db.execute('PRAGMA foreign_keys=ON')
-        return db
+        try:
+            db.row_factory = sqlite3.Row
+            db.execute('PRAGMA foreign_keys=ON')
+            with db:
+                yield db
+        finally:
+            db.close()
 
     def submit(self, data):
         validate(data)
