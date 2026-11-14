@@ -4,6 +4,16 @@ A local webhook event workbench built with Python, SQLite, and vanilla JavaScrip
 Receive fictional events, validate JSON, prevent duplicate processing, simulate failures,
 and inspect retries through a browser dashboard.
 
+## Screenshots
+
+### Dashboard overview
+![FlowRelay dashboard overview](dashboard-overview.png)
+
+### Queue activity
+![Queue showing succeeded and dead-letter events](queue-activity.png)
+
+### Attempt history
+![Three processing attempts ending in dead-letter status](attempt-history.png)
 ## Why this project exists
 
 Event-driven integrations must handle repeated requests and temporary failures.
